@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>try{var t=localStorage.getItem('site-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Agentic Process in Claude · Jonathan Coppola</title>
+<meta name="description" content="A 15-minute microlearning on how AI agents plan, act, check and adjust, and how that loop works in Claude. Includes a hands-on lab built from real Claude API responses.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/course.css?v=20261117">
+<link rel="stylesheet" href="../assets/site.css?v=202611171543">
+</head>
+<body data-root="../" data-section="apps">
+
+<div class="progress" aria-label="Course progress">
+  <div class="progress__inner">
+    <span id="progLabel">0 of 6 lessons complete</span>
+    <div class="progress__track" role="progressbar" aria-labelledby="progLabel" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progBar"><div class="progress__fill" id="progFill"></div></div>
+    <nav class="progress__dots" aria-label="Jump to a lesson" id="progDots"></nav>
+  </div>
+</div>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="kicker">Microlearning · Technical curriculum demo</div>
+    <h1>The Agentic Process in Claude</h1>
+    <p class="headline">You ask, it answers, you do the rest. Unless you hand over the whole task.</p>
+    <p class="intro">Learn how AI agents plan, act, check their own work and adjust, and how that loop works when you hand Claude a task. Then watch a real agent run in a hands-on lab built from live Claude API calls.</p>
+    <div class="continue" style="margin-top:0"><a class="btn solid" href="#b1">Start the lesson ↓</a></div>
+    <div class="meta-row">
+      <div><b>~15</b><span>minutes</span></div>
+      <div><b>8</b><span>short lessons</span></div>
+      <div><b>1</b><span>hands-on lab</span></div>
+      <div><b>5</b><span>check questions</span></div>
+    </div>
+    <div class="objectives">
+      <h2>By the end, you'll be able to</h2>
+      <ol>
+        <li>Explain the difference between a chat answer and an agentic task.</li>
+        <li>Describe the four steps of the agentic loop: Plan, Act, Check, Adjust.</li>
+        <li>Point to where each step shows up when Claude runs a task.</li>
+        <li>Write a task request that gives Claude an outcome, context and clear limits.</li>
+      </ol>
+    </div>
+    <p class="demo-note">Designed and built by Jonathan Coppola as an HTML version of an Articulate Rise 360 storyboard. The lab uses real responses captured from the Claude API with a Python script (<a href="https://github.com/coppolajonathan-lab/anthropic_lab_demo" target="_blank" rel="noopener">see the code</a>). Your progress is saved in this browser.</p>
+  </header>
+
+  <!-- ===================== 1. HOOK ===================== -->
+  <section class="block" id="b1" data-block="1" aria-labelledby="h1b">
+    <div class="act"><span class="num">Lesson 1</span><h2 id="h1b">You do the rest</h2><span class="rule"></span><span class="time">1 min</span></div>
+    <p class="pull">You ask. It answers. <em>You do the rest.</em></p>
+    <p class="lede">Most of us use AI the same way. We ask a question, get an answer, then copy it somewhere and do the real work ourselves: search the files, build the document, send the email.</p>
+    <div class="juggle" aria-hidden="true">
+      <div><div class="ico">💬</div><b>Ask the chat</b><span>Get one answer</span></div>
+      <div><div class="ico">📋</div><b>Copy it out</b><span>Into the doc, the sheet, the inbox</span></div>
+      <div><div class="ico">🔁</div><b>Repeat</b><span>For every step of the task</span></div>
+    </div>
+    <p class="lede">What if you could hand over the <b>whole task</b> instead of just the question? That's what agentic AI does. In the next 15 minutes, you'll see how it works and watch a real agent at work.</p>
+    <div class="continue"><button class="btn solid" data-complete="1" data-next="b2">Show me how →</button></div>
+  </section>
+
+  <!-- ===================== 2. CHAT / WORKFLOW / AGENT ===================== -->
+  <section class="block" id="b2" data-block="2" aria-labelledby="h2b">
+    <div class="act"><span class="num">Lesson 2</span><h2 id="h2b">What “agentic” means</h2><span class="rule"></span><span class="time">2 min</span></div>
+    <p class="pull">An agent <em>decides its own next step.</em></p>
+    <p class="lede">Anthropic, the company behind Claude, separates AI systems into two kinds. A <b>workflow</b> follows a path someone coded in advance. An <b>agent</b> decides for itself which steps to take and which tools to use, based on what it finds along the way. Flip each card to compare them with ordinary chat.</p>
+    <div class="cards" id="cards">
+      <button class="flip" aria-pressed="false" aria-label="Chat. Select to flip.">
+        <div class="flip__inner">
+          <div class="flip__face flip__front"><b>Chat</b><small>Flip me</small></div>
+          <div class="flip__face flip__back"><b>Chat</b>You ask one question and get one answer. You decide what happens next.</div>
+        </div>
+      </button>
+      <button class="flip" aria-pressed="false" aria-label="Workflow. Select to flip.">
+        <div class="flip__inner">
+          <div class="flip__face flip__front"><b>Workflow</b><small>Flip me</small></div>
+          <div class="flip__face flip__back"><b>Workflow</b>The AI follows fixed steps someone wrote ahead of time, like a recipe. Predictable, but it can't change course.</div>
+        </div>
+      </button>
+      <button class="flip" aria-pressed="false" aria-label="Agent. Select to flip.">
+        <div class="flip__inner">
+          <div class="flip__face flip__front"><b>Agent</b><small>Flip me</small></div>
+          <div class="flip__face flip__back"><b>Agent</b>You give it an outcome. It plans the steps, uses tools, checks its results and changes course when something doesn't work.</div>
+        </div>
+      </button>
+    </div>
+    <p class="sr" aria-live="polite" id="cardsLive"></p>
+    <div class="note">Agents trade speed for capability. For a one-line answer, plain chat is still the fastest choice.</div>
+    <div class="continue"><a class="btn" href="#b3">Continue ↓</a></div>
+  </section>
+
+  <!-- ===================== 3. THE LOOP ===================== -->
+  <section class="block" id="b3" data-block="3" aria-labelledby="h3b">
+    <div class="act"><span class="num">Lesson 3</span><h2 id="h3b">The agentic loop</h2><span class="rule"></span><span class="time">3 min</span></div>
+    <p class="pull">Plan → Act → Check → Adjust. <em>Repeat until done.</em></p>
+    <p class="lede">Every agent, however advanced, runs the same basic loop. Let's follow one real task through it: <i>“Turn last quarter's customer feedback into a one-page summary for my manager.”</i></p>
+    <div class="process" id="process">
+      <div class="process__steps" role="tablist" aria-label="Steps of the agentic loop"></div>
+      <div class="process__body" role="tabpanel" aria-live="polite" id="processBody"></div>
+      <div class="process__foot">
+        <button class="btn sm" id="procPrev">← Back</button>
+        <button class="btn sm solid" id="procNext">Next →</button>
+      </div>
+    </div>
+    <p class="loopback">↺ Then back to Plan, until the task is done, Claude needs you, or it reaches a limit you set.</p>
+    <div class="note"><b>Why it matters:</b> the Check step is what makes an agent different from a long chat reply. It catches its own mistakes by looking at real results, rather than assuming each step worked.</div>
+    <div class="continue"><a class="btn" href="#b4">Continue ↓</a></div>
+  </section>
+
+  <!-- ===================== 4. IN CLAUDE ===================== -->
+  <section class="block" id="b4" data-block="4" aria-labelledby="h4b">
+    <div class="act"><span class="num">Lesson 4</span><h2 id="h4b">How the loop works in Claude</h2><span class="rule"></span><span class="time">3.5 min</span></div>
+    <p class="lede">Anthropic first built this loop into Claude Code, a tool for programmers. When it noticed people using Claude Code for all kinds of non-coding work, it brought the same agent to everyday work: first as a mode called <b>Cowork</b>, and now as part of Claude itself. You describe what you need, and Claude decides whether that's a quick answer or a task. Select each tab to see where the loop shows up.</p>
+    <div class="tabs" id="tabs">
+      <div class="tablist" role="tablist" aria-label="Where the loop shows up in Claude"></div>
+      <div class="tabpanel" role="tabpanel" id="tabPanel" tabindex="0"></div>
+    </div>
+    <div class="continue"><a class="btn" href="#b5">On to the lab ↓</a></div>
+  </section>
+
+  <!-- ===================== 5. LAB ===================== -->
+  <section class="block" id="b5" data-block="5" aria-labelledby="h5b">
+    <div class="act"><span class="num">Lesson 5</span><h2 id="h5b">Hands-on lab: watch the loop</h2><span class="rule"></span><span class="time">4 min</span></div>
+    <p class="lede">Time to see a real agent at work. Everything in this lab came from the Claude API. Step through it, then answer two questions.</p>
+    <div class="lab-frame">
+      <div class="voice">Hands-on lab</div>
+      <h3>Watch the agentic loop</h3>
+      <p class="src" id="labSrc">Loading lab data…</p>
+
+      <div class="lab-part">
+        <div class="part-label">Part 1 of 3</div>
+        <h4>Same task, two requests</h4>
+        <p>Both requests went to Claude, which was told to plan before acting. Reveal each plan, then answer the question.</p>
+        <div class="grid2">
+          <div class="req"><span class="tag">Request A · vague</span><blockquote id="promptVague"></blockquote>
+            <button class="btn sm" data-reveal="Vague" aria-expanded="false" aria-controls="replyVague">Show Claude's plan</button>
+            <div class="reply md hidden" id="replyVague"></div></div>
+          <div class="req"><span class="tag">Request B · specific</span><blockquote id="promptSpecific"></blockquote>
+            <button class="btn sm" data-reveal="Specific" aria-expanded="false" aria-controls="replySpecific">Show Claude's plan</button>
+            <div class="reply md hidden" id="replySpecific"></div></div>
+        </div>
+        <fieldset class="q"><legend>Which request gave Claude enough to make a concrete plan, and why?</legend>
+          <div class="opts" id="labQ1"></div><div id="labQ1fb" aria-live="polite"></div></fieldset>
+      </div>
+
+      <div class="lab-part">
+        <div class="part-label">Part 2 of 3</div>
+        <h4>Step through the agentic loop</h4>
+        <p>Claude was handed Request B and three tools: <code>list_files</code>, <code>read_file</code> and <code>ask_user</code>. Here's every step it took, in order.</p>
+        <div class="ring" aria-hidden="true">
+          <span class="node" data-s="Plan">Plan</span><span class="arrow">→</span>
+          <span class="node" data-s="Act">Act</span><span class="arrow">→</span>
+          <span class="node" data-s="Check">Check</span><span class="arrow">→</span>
+          <span class="node" data-s="Adjust">Adjust</span><span class="arrow">↺</span>
+          <span class="sep"></span>
+          <span class="node" data-s="Ask">Ask you</span>
+          <span class="node" data-s="Done">Done</span>
+        </div>
+        <div class="viewer" id="viewer">
+          <div class="vhead"><div><span class="chip" id="vchip"></span> <b id="vtitle"></b></div><span class="vmeta" id="vmeta"></span></div>
+          <div class="vbody" id="vbody" aria-live="polite"></div>
+          <div class="vfoot">
+            <button class="btn sm" id="vprev">← Back</button>
+            <div class="vprog" role="progressbar" aria-label="Lab steps viewed" aria-valuemin="0" aria-valuemax="100" id="vbar"><div id="vfill"></div></div>
+            <label class="toggle"><input type="checkbox" id="vraw"> <span>Show API view</span></label>
+            <button class="btn sm solid" id="vnext">Next →</button>
+          </div>
+        </div>
+        <p class="vmeta" style="margin-top:8px">Tip: the ← and → arrow keys work when the viewer has focus.</p>
+      </div>
+
+      <div class="lab-part">
+        <div class="part-label">Part 3 of 3</div>
+        <h4>What just happened?</h4>
+        <p id="labP3lock" class="vmeta">Step through Part 2 to the end to unlock this part.</p>
+        <div id="labP3" class="hidden">
+          <div class="lab-stats">
+            <div><b id="sTurns"></b><span>turns of the loop</span></div>
+            <div><b id="sTools"></b><span>tool calls</span></div>
+            <div><b id="sTokens"></b><span>tokens used</span></div>
+          </div>
+          <fieldset class="q"><legend>The September file had ratings but no comments. How did Claude handle it?</legend>
+            <div class="opts" id="labQ2"></div><div id="labQ2fb" aria-live="polite"></div></fieldset>
+        </div>
+      </div>
+    </div>
+    <div class="continue"><a class="btn" href="#b6">Continue ↓</a></div>
+  </section>
+
+  <!-- ===================== 6. SCENARIO (optional) ===================== -->
+  <section class="block" id="b6" data-block="6" aria-labelledby="h6b">
+    <div class="act"><span class="num">Lesson 6 · optional</span><h2 id="h6b">Practice: hand Claude a task</h2><span class="rule"></span><span class="time">3 min</span></div>
+    <p class="lede">It's Wednesday. Your manager wants a short competitor pricing comparison for Friday's team meeting. You decide to hand it to Claude. Make two decisions.</p>
+    <div class="scene" id="d1">
+      <div class="who">Decision 1</div>
+      <h3 style="font-family:var(--serif);margin:4px 0 6px">How do you ask?</h3>
+      <div class="choices"></div>
+      <div class="result" aria-live="polite"></div>
+    </div>
+    <div class="scene hidden" id="d2">
+      <div class="who">Decision 2 · A checkpoint</div>
+      <div class="mock"><div class="mock-h">Claude</div>Your draft is ready. I can email it to your manager now. Send it?</div>
+      <div class="choices"></div>
+      <div class="result" aria-live="polite"></div>
+    </div>
+    <div class="note hidden" id="scenarioWrap"><b>Your loop:</b> <span id="scenarioRecap"></span></div>
+    <div class="continue"><a class="btn" href="#b7">Continue ↓</a></div>
+  </section>
+
+  <!-- ===================== 7. KNOWLEDGE CHECK ===================== -->
+  <section class="block" id="b7" data-block="7" aria-labelledby="h7b">
+    <div class="act"><span class="num">Lesson 7</span><h2 id="h7b">Knowledge check</h2><span class="rule"></span><span class="time">1.5 min</span></div>
+    <p class="lede">Five quick questions. You can try again until you get each one right. Your score counts first tries.</p>
+    <div id="kc"></div>
+    <div class="score hidden" id="kcScore" aria-live="polite"></div>
+  </section>
+
+  <!-- ===================== 8. WRAP-UP ===================== -->
+  <section class="block curtain" id="b8" data-block="8" aria-labelledby="h8b">
+    <div class="kicker">Lesson 8 · Wrap-up</div>
+    <h2 id="h8b" class="sr">Wrap-up</h2>
+    <p class="statement">Describe the outcome. Let Claude plan. <em>Stay in the loop at the checkpoints.</em></p>
+    <p class="lede" style="margin:0 auto">You've seen the loop: Plan, Act, Check, Adjust. Your next step: pick one task from this week that you'd normally do yourself in five or more steps, hand it to Claude, and watch the loop work.</p>
+    <div class="complete-card hidden" id="completeCard" role="status">
+      <b>Lesson complete</b>
+      <p id="completeText"></p>
+    </div>
+    <p class="vmeta" id="remaining" style="margin-top:18px"></p>
+    <div class="continue"><button class="btn sm" id="reset">Reset my progress</button></div>
+    <div class="sources">
+      <h3>Sources</h3>
+      <ul>
+        <li><a href="https://support.claude.com/en/articles/13345190-getting-started-with-cowork" target="_blank" rel="noopener">Get started with Claude Cowork</a>, Claude Help Center: planning and progress, connectors, skills and plugins, approval modes, scheduled tasks, projects, and Cowork becoming part of Claude.</li>
+        <li><a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">Building effective agents</a>, Anthropic Engineering: workflows vs. agents, “ground truth” from the environment, checkpoints and stopping conditions.</li>
+        <li><a href="https://github.com/coppolajonathan-lab/anthropic_lab_demo" target="_blank" rel="noopener">anthropic_lab_demo</a>: the Python script that captured the lab's real API responses.</li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<script src="assets/course.js?v=20261117"></script>
+<script src="../assets/site.js?v=202611171543"></script>
+</body>
+</html>

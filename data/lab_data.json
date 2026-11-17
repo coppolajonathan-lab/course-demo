@@ -1,0 +1,152 @@
+{
+  "isSample": false,
+  "model": "claude-sonnet-5-5",
+  "capturedAt": "2026-11-17",
+  "files": {
+    "q3_july.csv": "id,rating,comment\n101,2,The dashboard takes forever to load in the mornings\n102,5,Support fixed my issue in ten minutes - amazing\n103,3,I was charged twice and the invoice page is confusing\n104,2,Pages load slowly when I filter reports\n105,4,Love the new export button\n106,1,Mobile app crashes every time I upload a photo\n",
+    "q3_august.csv": "id,rating,comment\n201,2,Still slow. Reports take a minute to open\n202,3,Billing page doesn't explain the new plan tiers\n203,5,Your support team is the best part of the product\n204,2,The app crashed twice during a client demo\n205,2,Load times are hurting my team's productivity\n206,4,Support walked me through setup - very patient\n",
+    "q3_september.csv": "id,rating\n301,3\n302,2\n303,4\n304,2\n305,5\n306,3\n"
+  },
+  "comparison": {
+    "vague": {
+      "prompt": "Look into our customer feedback.",
+      "response": "**Plan**\n1. List all files in the `feedback` folder to see what's there (formats, dates, volume).\n2. Read the files, starting with the most recent or largest.\n3. Identify recurring themes, sentiment, pain points, and praise.\n4. Pull representative quotes and note any urgent issues.\n5. Summarize findings with prioritized, actionable recommendations.\n\n**Questions**\n- What's your goal: a general summary, product issues, support quality, or something else?\n- Any time period, product, or customer segment to focus on?\n- What output format do you want (brief summary, detailed report, bullet list)?\n- Should I flag anything sensitive, such as personal data, in the files?",
+      "usage": {
+        "input": 85,
+        "output": 254
+      }
+    },
+    "specific": {
+      "prompt": "Summarize our Q3 customer feedback into a one-page brief for my manager: the top three themes, how many comments mention each, and one short quote per theme. Use only the files in the feedback folder.",
+      "response": "**Plan**\n1. List all files in the feedback folder and note their formats and date ranges.\n2. Read each file and filter to Q3 comments only.\n3. Identify recurring themes and pick the top three by volume.\n4. Count the comments mentioning each theme (a comment can count toward more than one).\n5. Choose one short, representative quote per theme.\n6. Draft a one-page brief with the themes, counts, and quotes, and note any data caveats.\n\n**Questions**\n- Is Q3 calendar (Jul-Sep) or fiscal?\n- Should quotes be anonymized?\n- What output format do you want (text reply, Word, PDF, etc.), and should I save it to the folder?\n- If files lack dates, should I include them or exclude them?",
+      "usage": {
+        "input": 137,
+        "output": 337
+      }
+    }
+  },
+  "loop": {
+    "task": "Summarize our Q3 customer feedback into a one-page brief for my manager: the top three themes, how many comments mention each, and one short quote per theme. Use only the files in the feedback folder.",
+    "steps": [
+      {
+        "turn": 1,
+        "stage": "Plan",
+        "kind": "text",
+        "text": "Plan:\n1. List the files in the feedback folder.\n2. Read the Q3 files.\n3. Identify the top three themes, count the comments that mention each, and pick one short quote per theme.\n4. Write the brief in Markdown, under 250 words."
+      },
+      {
+        "turn": 1,
+        "stage": "Act",
+        "kind": "tool_call",
+        "tool": "list_files",
+        "input": {},
+        "raw": {
+          "type": "tool_use",
+          "id": "toolu_01R3RMGRTDG7Eee6Wfofsajz",
+          "name": "list_files",
+          "input": {}
+        }
+      },
+      {
+        "turn": 1,
+        "stage": "Check",
+        "kind": "tool_result",
+        "tool": "list_files",
+        "output": "q3_july.csv\nq3_august.csv\nq3_september.csv",
+        "from_user": false
+      },
+      {
+        "turn": 2,
+        "stage": "Adjust",
+        "kind": "text",
+        "text": "Found three files, one per month of Q3. Next I'll read all three."
+      },
+      {
+        "turn": 2,
+        "stage": "Act",
+        "kind": "tool_call",
+        "tool": "read_file",
+        "input": {
+          "name": "q3_july.csv"
+        },
+        "raw": {
+          "type": "tool_use",
+          "id": "toolu_015uaH8SPu3NG14jtZgHtTNz",
+          "name": "read_file",
+          "input": {
+            "name": "q3_july.csv"
+          }
+        }
+      },
+      {
+        "turn": 2,
+        "stage": "Check",
+        "kind": "tool_result",
+        "tool": "read_file",
+        "output": "id,rating,comment\n101,2,The dashboard takes forever to load in the mornings\n102,5,Support fixed my issue in ten minutes - amazing\n103,3,I was charged twice and the invoice page is confusing\n104,2,Pages load slowly when I filter reports\n105,4,Love the new export button\n106,1,Mobile app crashes every time I upload a photo\n",
+        "from_user": false
+      },
+      {
+        "turn": 2,
+        "stage": "Act",
+        "kind": "tool_call",
+        "tool": "read_file",
+        "input": {
+          "name": "q3_august.csv"
+        },
+        "raw": {
+          "type": "tool_use",
+          "id": "toolu_01KusMQULTHC1YBAD9kkCESd",
+          "name": "read_file",
+          "input": {
+            "name": "q3_august.csv"
+          }
+        }
+      },
+      {
+        "turn": 2,
+        "stage": "Check",
+        "kind": "tool_result",
+        "tool": "read_file",
+        "output": "id,rating,comment\n201,2,Still slow. Reports take a minute to open\n202,3,Billing page doesn't explain the new plan tiers\n203,5,Your support team is the best part of the product\n204,2,The app crashed twice during a client demo\n205,2,Load times are hurting my team's productivity\n206,4,Support walked me through setup - very patient\n",
+        "from_user": false
+      },
+      {
+        "turn": 2,
+        "stage": "Act",
+        "kind": "tool_call",
+        "tool": "read_file",
+        "input": {
+          "name": "q3_september.csv"
+        },
+        "raw": {
+          "type": "tool_use",
+          "id": "toolu_01A2SvmtBDcbGRTeqVbRM3Fr",
+          "name": "read_file",
+          "input": {
+            "name": "q3_september.csv"
+          }
+        }
+      },
+      {
+        "turn": 2,
+        "stage": "Check",
+        "kind": "tool_result",
+        "tool": "read_file",
+        "output": "id,rating\n301,3\n302,2\n303,4\n304,2\n305,5\n306,3\n",
+        "from_user": false
+      },
+      {
+        "turn": 3,
+        "stage": "Done",
+        "kind": "text",
+        "text": "# Q3 Customer Feedback Brief\n\n**Coverage caveat:** This covers **July and August only (12 comments)**. The September file (`q3_september.csv`) has ratings but no comment text, so it adds nothing to the themes or counts. The counts are small, so treat them as directional.\n\n## Top themes\n\n| # | Theme | Comments | Sentiment | Example quote |\n|---|---|---|---|---|\n| 1 | **Slow performance**: dashboards and reports load slowly | 4 of 12 | Negative (ratings 2) | \"Load times are hurting my team's productivity\" |\n| 2 | **Helpful support** | 3 of 12 | Positive (ratings 4\u20135) | \"Your support team is the best part of the product\" |\n| 3 (tie) | **App crashes** | 2 of 12 | Negative (ratings 1\u20132) | \"The app crashed twice during a client demo\" |\n| 3 (tie) | **Billing confusion**: double charge, unclear plan tiers | 2 of 12 | Neutral to negative (ratings 3) | \"Billing page doesn't explain the new plan tiers\" |\n\nThe third place is a tie, so I've listed both themes. One more comment praised the new export button.\n\n## Takeaways\n- Slow loading is the biggest complaint. It showed up in both months and hasn't improved. One August comment began \"Still slow.\"\n- Support is the main strength.\n- Crashes and billing clarity are smaller issues, but each is tied to a specific failure, such as a double charge or a lost client demo.\n\n## Next step\nGet the September comments if they exist. They could change the ranking, especially for the tied third place."
+      }
+    ],
+    "turns": 3,
+    "usage": {
+      "input": 2951,
+      "output": 1253
+    }
+  }
+}
