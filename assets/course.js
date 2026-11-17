@@ -110,11 +110,21 @@
 
   /* ================= Lesson 4: tabs ================= */
   const TABS = [
-    { name: "Plan & progress", step: "Plan", body: "Claude breaks your request into subtasks and shows each step as it works, so you can follow along or redirect it partway through." },
-    { name: "Tools", step: "Act", body: "Claude acts through tools: connectors to your apps, a browser, files in folders you connect, and code run in an isolated environment. You choose which connectors it can use. For big jobs, it can hand parts of the work to sub-agents running in parallel." },
-    { name: "Skills & plugins", step: "Act", body: "Skills are saved instructions for doing one kind of task well, such as building a slide deck. Plugins bundle skills, connectors and sub-agents together." },
-    { name: "Approvals", step: "Check & Ask", body: "You decide how much Claude can do on its own: Manual, Auto, or Skip all approvals. Auto reviews each action for safety before it runs. Permanently deleting files always needs your explicit “Allow.”" },
-    { name: "Scheduled tasks & projects", step: "Repeat", body: "A task can run once, or on a schedule in the cloud with no device online. Projects group related tasks with their own files, instructions and memory." }
+    { name: "Plan & progress", step: "Plan", body: "Claude breaks your request into subtasks and shows each step as it works, so you can follow along or redirect it partway through.",
+      img: "1-plan-progress.png", w: 952, h: 202, cap: "One request, several steps: Claude states its plan before it starts.",
+      alt: "A Claude conversation. The request reads: Rewrite my resume from my LinkedIn profile as a doc, export a PDF to my Job Search folder, and set up a weekly Monday check of my Gmail for recruiter replies. Claude replies with its plan: pull the LinkedIn profile, build the resume as a doc, export a PDF to the Job Search folder, and set up the Monday Gmail check." },
+    { name: "Tools", step: "Act", body: "Claude acts through tools: connectors to your apps, a browser, files in folders you connect, and code run in an isolated environment. You choose which connectors it can use. For big jobs, it can hand parts of the work to sub-agents running in parallel.",
+      img: "2-tools-connectors.png", w: 1028, h: 716, cap: "Connectors are Claude's tools. Here, Google Drive, Gmail, Canva and Google Docs are switched on.",
+      alt: "Claude's connector directory listing Google Drive, Gmail, Google Calendar, Microsoft 365, Canva, Slack, Google Sheets, Notion, Atlassian, Google Docs, Figma and Supabase. Google Drive, Gmail, Canva and Google Docs show a check mark as connected; the others show a plus button to add them." },
+    { name: "Skills & plugins", step: "Act", body: "Skills are saved instructions for doing one kind of task well, such as building a slide deck. Plugins bundle skills, connectors and sub-agents together.",
+      img: "3-skills-plugins.png", w: 1232, h: 865, cap: "Skills and plugins are added from Customize, alongside connectors.",
+      alt: "Claude's Customize page on the Skills tab, with Connectors and Plugins tabs beside it. It features a Data plugin from Anthropic and lists skills to try or add, including doc-coauthoring, web-artifacts-builder, learn, Plugin Management and Design." },
+    { name: "Approvals", step: "Check & Ask", body: "You decide how much Claude can do on its own: Manual, Auto, or Skip all approvals. Auto reviews each action for safety before it runs. Permanently deleting files always needs your explicit “Allow.”",
+      img: "4-approvals.png", w: 791, h: 284, cap: "A checkpoint: Claude asks before it writes to your document.",
+      alt: "An approval prompt reading: Claude wants to write your resume content (from your LinkedIn profile) to the doc Jonathan Coppola — Resume in Claude Docs. Approve this edit? The options are Approve, Deny, or type something else." },
+    { name: "Scheduled tasks & projects", step: "Repeat", body: "A task can run once, or on a schedule in the cloud with no device online. Projects group related tasks with their own files, instructions and memory.",
+      img: "5-scheduled-task.png", w: 777, h: 303, cap: "A scheduled task runs the loop again on its own, every Monday.",
+      alt: "A scheduled task named Weekly recruiter reply check. Schedule: every Monday at 8:17 AM EST. Permission mode: Auto. Instructions: check Gmail for recruiter replies from the past 7 days." }
   ];
   const STEP_COLOR = { "Plan": "var(--s-plan)", "Act": "var(--s-act)", "Check & Ask": "var(--s-ask)", "Repeat": "var(--s-adjust)" };
   let tIdx = 0; const tSeen = new Set();
@@ -130,7 +140,9 @@
     tSeen.add(tIdx);
     tList.querySelectorAll("button").forEach((b, i) => { b.setAttribute("aria-selected", i === tIdx); b.classList.toggle("seen", tSeen.has(i)); b.tabIndex = i === tIdx ? 0 : -1; });
     $("tabPanel").innerHTML = `<span class="step-tag" style="background:${STEP_COLOR[t.step]}">Loop step: ${esc(t.step)}</span>
-      <h3>${esc(t.name)}</h3><p style="margin:0">${esc(t.body)}</p>`;
+      <h3>${esc(t.name)}</h3><p style="margin:0">${esc(t.body)}</p>
+      <figure class="shot"><a href="images/tabs/${t.img}" target="_blank" rel="noopener" title="Open full size"><img src="images/tabs/${t.img}" width="${t.w}" height="${t.h}" alt="${esc(t.alt)}" decoding="async"></a>
+      <figcaption>${esc(t.cap)} <span class="sr">(Opens full size in a new tab.)</span></figcaption></figure>`;
     if (tSeen.size === TABS.length) complete(4);
   }
   tList.addEventListener("keydown", (e) => {
@@ -138,6 +150,7 @@
     if (e.key === "ArrowLeft") { tIdx = (tIdx - 1 + TABS.length) % TABS.length; renderTabs(); tList.children[tIdx].focus(); }
   });
   renderTabs();
+  TABS.forEach((t) => { const i = new Image(); i.src = "images/tabs/" + t.img; });
 
   /* ================= shared quiz helper ================= */
   function quiz(boxId, fbId, name, options, onCorrect) {

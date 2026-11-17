@@ -119,6 +119,10 @@ section.block { padding: 60px 0 12px; scroll-margin-top: 110px; }
 .tablist button.seen:not([aria-selected="true"])::after { content: " ✓"; color: var(--good); }
 .tabpanel { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; }
 .tabpanel .step-tag { display: inline-block; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: #fff; padding: 3px 10px; border-radius: 999px; margin-bottom: 8px; font-weight: 700; }
+.shot { margin: 18px 0 0; }
+.shot img { display: block; max-width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line); box-shadow: 0 6px 20px rgba(29,26,23,.12); background: #1f1e1d; }
+.shot a { display: block; cursor: zoom-in; }
+.shot figcaption { font-size: 13px; color: var(--muted); margin-top: 8px; font-style: italic; }
 .tabpanel h3 { font-family: var(--serif); font-size: 22px; margin: 0 0 6px; }
 
 /* ---------- lab ---------- */
@@ -152,7 +156,7 @@ section.block { padding: 60px 0 12px; scroll-margin-top: 110px; }
 .ring .node[data-s="Done"].on { background: var(--s-done); border-color: var(--s-done); }
 html[data-theme="leather"] .ring .node.on { color: #1d1511; }
 .chip { display: inline-block; padding: 2px 10px; border-radius: 999px; color: #fff; font-size: 12px; font-weight: 700; }
-html[data-theme="leather"] .chip { color: #1d1511; }
+html[data-theme="leather"] .chip, html[data-theme="leather"] .tabpanel .step-tag { color: #1d1511; }
 .chip.Plan { background: var(--s-plan); } .chip.Act { background: var(--s-act); } .chip.Check { background: var(--s-check); }
 .chip.Adjust { background: var(--s-adjust); } .chip.Ask { background: var(--s-ask); } .chip.Done { background: var(--s-done); }
 .viewer { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
